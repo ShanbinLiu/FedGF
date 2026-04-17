@@ -1,6 +1,6 @@
 # FedGF
 
-A PyTorch-based research codebase for **federated learning (FL) algorithm development and benchmarking**. It provides a unified training entrypoint, pluggable server/client methods, dataset-task modularization, and fairness tracking with Gini-based metrics.
+This repository contains the source code for the paper **Gini Coefficient-aware Fair Federated Learning**.
 
 > The main entrypoint is `main.py`, which dynamically loads method, dataset, and model modules through command-line arguments.
 
@@ -48,22 +48,16 @@ FedGF/
 
 ## 3. Requirements
 
-Recommended: **Python 3.8+**.
+Recommended: **Python 3.8+** and **PyTorch 1.12+**.
 
 Key dependencies inferred from imports:
 
 - `torch`, `torchvision`
 - `numpy`
 - `tqdm`
-- `cvxopt` (required by `fedmgda+`)
+- `cvxopt`
 - `opencv-python`, `Pillow`
-- `SimpleITK`, `nibabel` (used in `office10*` data scripts)
-
-Example installation:
-
-```bash
-pip install torch torchvision numpy tqdm cvxopt opencv-python pillow SimpleITK nibabel
-```
+- `SimpleITK`, `nibabel`
 
 ---
 
@@ -76,8 +70,6 @@ Initialization expects the following folders (with one or more `.json` files in 
 - `task/<dataset>/data/test`
 
 Each JSON file should include a `user_data` field keyed by client name.
-
-> Important: the code uses `vaild` (not `valid`) as the validation folder name. Keep this naming for compatibility.
 
 To generate synthetic data, run the corresponding generator script, for example:
 
@@ -102,6 +94,7 @@ python main.py \
   --batch_size 64 \
   --learning_rate 0.1 \
   --proportion 0.1 \
+  --seed 0 \
   --gpu 0
 ```
 
@@ -185,7 +178,7 @@ Methods currently available under `method/` (excluding base/helpers):
 ## 9. Troubleshooting
 
 ### Q1: `task/<dataset>/data/...` not found
-Prepare the dataset folders and JSON files as described in Section 4, and ensure the validation directory is named `vaild`.
+Prepare the dataset folders and JSON files as described in Section 4.
 
 ### Q2: `No module named task.<dataset>.<model>`
 Check that:
@@ -195,9 +188,3 @@ Check that:
 
 ### Q3: Result file not generated
 Ensure `task/<dataset>/record/` exists and is writable.
-
----
-
-## 10. License
-
-No standalone `LICENSE` file is currently included in this repository. If you plan to redistribute or publish derived work, add an explicit license and provide proper citations for datasets and algorithms.
