@@ -188,3 +188,5 @@ Check that:
 
 ### Q3: Result file not generated
 Ensure `task/<dataset>/record/` exists and is writable.
+
+This project is modified based on https://github.com/WwZzz/easyFL/tree/easyFL_v1.0.
